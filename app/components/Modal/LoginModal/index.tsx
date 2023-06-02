@@ -94,15 +94,15 @@ export const LoginModal = () => {
       <hr />
       <Button
         outline
-        label="Continue with Google"
+        label="Sign In with Google"
         icon={FcGoogle}
-        onClick={() => { }}
+        onClick={() => signIn('google')}
       />
       <Button
         outline
-        label="Continue with Github"
+        label="Sign in with Github"
         icon={AiFillGithub}
-        onClick={() => { }}
+        onClick={() => signIn('github')}
       />
       <div className="
         text-neutral-500
