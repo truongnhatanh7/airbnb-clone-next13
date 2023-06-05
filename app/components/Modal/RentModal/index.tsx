@@ -8,6 +8,7 @@ import { categories } from '../../Navbar/Categories'
 import { CategoryInput } from '../../Input/CategoryInput'
 import { FieldValues, useForm } from 'react-hook-form'
 import { CountrySelect } from '../../Input/CountrySelect'
+import dynamic from 'next/dynamic'
 
 enum STEPS {
   CATEGORY = 0,
@@ -47,7 +48,13 @@ export const RentModal = () => {
   });
 
   const category = watch('category');
-  const location = watch('location')
+  const location = watch('location');
+
+  // This lib does not made for next 13
+  // Therefore this trick fixes the bug
+  const Map = useMemo(() => dynamic(() => import("../../Map"), {
+    ssr: false
+  }), [location]);
 
   const setCustomValue = (id: string, value: any) => {
     setValue(id, value, {
@@ -112,13 +119,16 @@ export const RentModal = () => {
   if (step === STEPS.LOCATION) {
     bodyContent = (
       <div className="flex flex-col gap-8">
-        <Heading 
+        <Heading
           title="Where is your place located?"
           subtitle="Help guests find you!"
         />
         <CountrySelect
           value={location}
           onChange={(value) => setCustomValue('location', value)}
+        />
+        <Map
+          center={location?.latlng}
         />
       </div>
     )
