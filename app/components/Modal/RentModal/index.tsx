@@ -9,6 +9,7 @@ import { CategoryInput } from '../../Input/CategoryInput'
 import { FieldValues, useForm } from 'react-hook-form'
 import { CountrySelect } from '../../Input/CountrySelect'
 import dynamic from 'next/dynamic'
+import { Counter } from '../../Input/Counter'
 
 enum STEPS {
   CATEGORY = 0,
@@ -49,6 +50,9 @@ export const RentModal = () => {
 
   const category = watch('category');
   const location = watch('location');
+  const guessCount = watch('guessCount');
+  const roomCount = watch('roomCount');
+  const bathroomCount = watch('bathroomCount');
 
   // This lib does not made for next 13
   // Therefore this trick fixes the bug
@@ -129,6 +133,37 @@ export const RentModal = () => {
         />
         <Map
           center={location?.latlng}
+        />
+      </div>
+    )
+  }
+
+  if (step === STEPS.INFO) {
+    bodyContent = (
+      <div className="flex flex-col gap-8">
+        <Heading
+          title="Share some basics about your place"
+          subtitle='What amenities do you have?'
+        />
+        <Counter
+          title="Number of guests"
+          subtitle='How many guests do you allow?'
+          value={guessCount}
+          onChange={(value) => setCustomValue('guestCount', value)}
+        />
+        <hr />
+        <Counter
+          title="Rooms"
+          subtitle='How many rooms do you have?'
+          value={roomCount}
+          onChange={(value) => setCustomValue('roomCount', value)}
+        />
+        <hr />
+        <Counter
+          title="Bathrooms"
+          subtitle='How many bathrooms do you have?'
+          value={bathroomCount}
+          onChange={(value) => setCustomValue('bathroomCount', value)}
         />
       </div>
     )
