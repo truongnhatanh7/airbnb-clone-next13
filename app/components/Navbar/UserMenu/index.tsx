@@ -10,6 +10,7 @@ import { useLoginModal } from '@/app/hooks/useLoginModal'
 import { User } from '@prisma/client'
 import { signOut } from 'next-auth/react'
 import { SafeUser } from '@/app/types'
+import { useRentModal } from '@/app/hooks/useRentModal'
 
 interface UserMenuProps {
   currentUser?: SafeUser | null;
@@ -20,7 +21,17 @@ export const UserMenu: React.FC<UserMenuProps> = ({
 }) => {
   const registerModal = useRegisterModal();
   const loginModal = useLoginModal();
+  const rentModal = useRentModal();
   const [isOpen, setIsOpen] = useState(false);
+
+  const onRent = useCallback(() => {
+    if (!currentUser) {
+      return loginModal.onOpen();
+    }
+
+    // Open rent modal
+    rentModal.onOpen();
+  }, [currentUser, loginModal, rentModal])
 
   const toggleOpen = useCallback(() => {
     setIsOpen(value => !value);
@@ -29,7 +40,7 @@ export const UserMenu: React.FC<UserMenuProps> = ({
     <div className='relative'>
       <div className="flex flex-row items-center gap-3">
         <div
-          onClick={() => { }}
+          onClick={onRent}
           className="
             hidden
             md:block
@@ -62,7 +73,7 @@ export const UserMenu: React.FC<UserMenuProps> = ({
         ">
           <AiOutlineMenu />
           <div className="hidden md:block">
-            <Avatar src={currentUser?.image}/>
+            <Avatar src={currentUser?.image} />
           </div>
         </div>
       </div>
@@ -106,10 +117,10 @@ export const UserMenu: React.FC<UserMenuProps> = ({
                       label="My properties"
                     />
                     <MenuItem
-                      onClick={() => { }}
+                      onClick={rentModal.onOpen}
                       label="Airbnb my home"
                     />
-                    <hr/>
+                    <hr />
                     <MenuItem
                       onClick={() => signOut()}
                       label="Logout"
