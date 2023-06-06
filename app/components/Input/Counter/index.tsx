@@ -39,10 +39,11 @@ export const Counter: React.FC<CounterProps> = ({
         <div className="font-light text-gray-600">
           {subtitle}
         </div>
-        <div className="flex flex-row items-center gap-4">
-          <div
-            onClick={onReduce}
-            className="
+      </div>
+      <div className="flex flex-row items-center gap-4">
+        <div
+          onClick={onReduce}
+          className="
               w-10
               h-10
               rounded-full
@@ -56,15 +57,15 @@ export const Counter: React.FC<CounterProps> = ({
               hover:opacity-80
               transition
             "
-          >
-            <AiOutlineMinus />
-          </div>
-          <div className="font-light text-xl text-neutral-600">
-            {value}
-          </div>
-          <div
-            onClick={onAdd}
-            className="
+        >
+          <AiOutlineMinus />
+        </div>
+        <div className="font-light text-xl text-neutral-600">
+          {value}
+        </div>
+        <div
+          onClick={onAdd}
+          className="
               w-10
               h-10
               rounded-full
@@ -78,9 +79,8 @@ export const Counter: React.FC<CounterProps> = ({
               hover:opacity-80
               transition
             "
-          >
-            <AiOutlinePlus />
-          </div>
+        >
+          <AiOutlinePlus />
         </div>
       </div>
     </div>
