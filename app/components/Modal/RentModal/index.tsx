@@ -10,6 +10,7 @@ import { FieldValues, useForm } from 'react-hook-form'
 import { CountrySelect } from '../../Input/CountrySelect'
 import dynamic from 'next/dynamic'
 import { Counter } from '../../Input/Counter'
+import { ImageUpload } from '../../Input/ImageUpload'
 
 enum STEPS {
   CATEGORY = 0,
@@ -53,6 +54,7 @@ export const RentModal = () => {
   const guessCount = watch('guessCount');
   const roomCount = watch('roomCount');
   const bathroomCount = watch('bathroomCount');
+  const imageSrc = watch('imageSrc');
 
   // This lib does not made for next 13
   // Therefore this trick fixes the bug
@@ -164,6 +166,21 @@ export const RentModal = () => {
           subtitle='How many bathrooms do you have?'
           value={bathroomCount}
           onChange={(value) => setCustomValue('bathroomCount', value)}
+        />
+      </div>
+    )
+  }
+
+  if (step === STEPS.IMAGES) {
+    bodyContent = (
+      <div className="flex flex-col gap-8">
+        <Heading
+          title="Add a photo of your place"
+          subtitle="Show guests what your place looks like!"
+        />
+        <ImageUpload
+          value={imageSrc}
+          onChange={(value) => setCustomValue('imageSrc', value)}
         />
       </div>
     )
