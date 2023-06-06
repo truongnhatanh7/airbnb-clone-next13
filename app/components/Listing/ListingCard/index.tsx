@@ -2,7 +2,7 @@
 
 import React, { useCallback, useMemo } from 'react'
 
-import { SafeListing, SafeUser } from '@/app/types';
+import { SafeListing, SafeReservation, SafeUser } from '@/app/types';
 import { Listing, Reservation } from '@prisma/client'
 
 import { useRouter } from 'next/navigation';
@@ -14,7 +14,7 @@ import { Button } from '../../Button';
 
 interface ListingCardProps {
   data: SafeListing
-  reservation?: Reservation;
+  reservation?: SafeReservation;
   onAction?: (id: string) => void;
   disabled?: boolean;
   actionLabel?: string;
@@ -107,7 +107,7 @@ export const ListingCard: React.FC<ListingCardProps> = ({
             $ {price}
           </div>
           {!reservation && (
-            <div className="font-light">night</div>
+            <div className="font-light">per night</div>
           )}
         </div>
         {onAction && actionLabel && (

@@ -6,8 +6,7 @@ import { ListingInfo } from '@/app/components/Listing/ListingInfo';
 import { ListingReservation } from '@/app/components/Listing/ListingReservation';
 import { categories } from '@/app/components/Navbar/Categories';
 import { useLoginModal } from '@/app/hooks/useLoginModal';
-import { SafeListing, SafeUser } from '@/app/types';
-import { Reservation } from '@prisma/client'
+import { SafeListing, SafeReservation, SafeUser } from '@/app/types';
 import axios from 'axios';
 import { differenceInCalendarDays, differenceInDays, eachDayOfInterval } from 'date-fns';
 import { useRouter } from 'next/navigation';
@@ -22,7 +21,7 @@ const initialDateRange = {
 };
 
 interface ListingClientProps {
-  reservations?: Reservation[];
+  reservations?: SafeReservation[];
   listing: SafeListing & {
     user: SafeUser
   }
@@ -61,25 +60,24 @@ export const ListingClient: React.FC<ListingClientProps> = ({
 
     setIsLoading(true);
 
-    axios.post('/api/reservation', {
+    axios.post('/api/reservations', {
       totalPrice,
       startDate: dateRange.startDate,
       endDate: dateRange.endDate,
       listingId: listing?.id
     })
-    .then(() => {
-      toast.success("Listing reserved!")
-      setDateRange(initialDateRange);
+      .then(() => {
+        toast.success("Listing reserved!")
+        setDateRange(initialDateRange);
 
-      // Redirect to /trips
-      router.refresh()
-    })
-    .catch(() => {
-      toast.error("Something went wrong.")
-    })
-    .finally(() => {
-      setIsLoading(false)
-    })
+        router.push("/trips")
+      })
+      .catch(() => {
+        toast.error("Something went wrong.")
+      })
+      .finally(() => {
+        setIsLoading(false)
+      })
   }, [totalPrice, dateRange, listing?.id, router, currentUser, loginModal])
 
   useEffect(() => {
@@ -115,7 +113,8 @@ export const ListingClient: React.FC<ListingClientProps> = ({
           <div className="
             grid
             grid-cols-1
-            md:grid-cols-7md:gap-10
+            md:grid-cols-7
+            md:gap-10
             mt-6
           ">
             <ListingInfo
@@ -133,7 +132,7 @@ export const ListingClient: React.FC<ListingClientProps> = ({
               md:order-last
               md:col-span-3
             ">
-              <ListingReservation 
+              <ListingReservation
                 price={listing.price}
                 totalPrice={totalPrice}
                 onChangeDate={(value) => setDateRange(value)}
