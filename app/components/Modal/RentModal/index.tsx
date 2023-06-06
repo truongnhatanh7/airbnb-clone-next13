@@ -66,7 +66,7 @@ export const RentModal = () => {
   // Therefore this trick fixes the bug
   const Map = useMemo(() => dynamic(() => import("../../Map"), {
     ssr: false
-  }), [location]);
+  }), []);
 
   const setCustomValue = (id: string, value: any) => {
     setValue(id, value, {
@@ -219,7 +219,7 @@ export const RentModal = () => {
     bodyContent = (
       <div className="flex flex-col gap-8">
         <Heading
-          title="How would you describ yoour place?"
+          title="How would you describe yoour place?"
           subtitle='Short and sweet works best!'
         />
 
