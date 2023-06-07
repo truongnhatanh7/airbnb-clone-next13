@@ -24,7 +24,7 @@ export const FavoritesClient: React.FC<FavoritesClientProps> = ({
         subtitle="List of places you have favorited!"
       />
       <div className="
-        mt=10
+        mt-10
         grid
         grid-cols-1
         sm:grid-cols-2
