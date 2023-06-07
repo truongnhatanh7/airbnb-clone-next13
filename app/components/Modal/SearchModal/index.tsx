@@ -20,9 +20,9 @@ enum STEPS {
 }
 
 export const SearchModal = () => {
-  const router = useRouter();
-  const params = useSearchParams();
   const searchModal = useSearchModal();
+  const params = useSearchParams();
+  const router = useRouter();
 
   const [location, setLocation] = useState<CountrySelectValue>()
   const [step, setStep] = useState(STEPS.LOCATION);
